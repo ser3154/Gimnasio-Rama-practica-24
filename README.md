@@ -1,3 +1,38 @@
+-- Ejercicio 1
+
+1. ¿Cuáles son los tres requisitos de una PWA y qué hace cada uno?
+   -Manifiesto ("manifest.webmanifest"): un JSON con el nombre, los íconos, los colores y el
+   modo de apertura. Le dice al navegador cómo instalar y mostrar la app.
+   -Service worker ("sw.js"): un script que el navegador ejecuta aparte de la página y que
+   intercepta cada petición. Permite guardar archivos en caché y que la app abra sin internet.
+   -HTTPS: conexión segura (o localhost en desarrollo). Los navegadores solo permiten registrar
+   service workers e instalar la app en contextos seguros.
+
+2. ¿Qué archivos generó "vite-plugin-pwa" en "dist/" y para qué sirve cada uno?
+   -manifest.webmanifest: el bloque "manifest" de "vite,config.ts" convertido a JSON.
+   -sw.js: el service worker generado por Workbox con la configuración de caché.
+   -workbox-xxxx.js: la librería Workbox que usa sw.js para las estrategias de caché.
+   -registerSW.js: registra el service worker con navigator.serviceWorler.register('/sw.js').
+   -index.html: ahora incluye el '<link rel="manifest">´y el script registerSW.js.
+
+3. ¿Porqué las clases usan NetworkFirst y las imágenes CacheFirst?
+   Las clases cambian con fecuencia, así que conviene pedir primero a la red para mostrar datos
+   actuales y usar lo guardado solo si no hay conexión. Las imágenes casi no cambian, por lo que
+   se sirven primero de la caché: carga más rápido y ahorra datos.
+
+4. ¿Qué diferencia hay entre una PWA y una aplicación híbrida?
+   Una PWA es una aplicación web que se instala desde el navegador, sin tienda de apps, con un
+   solo código web y acceso limitado a funciones del dispositivo. Una app híbrida (Ionic,
+   Cordova, Capacitor) empaqueta la web de un contenedor nativo, se distribuye por Play Store o
+   App Store y accede a más funciones del dispositivo mediante plugins.
+
+-- Ejercicio 2
+
+1. ¿Porqué en 'npm run dev' no hay service worker?
+   Porque el servidor de desarrollo sirve los archivos al instante y un service worker los
+   dejaría en caché, de modo que no se verían los cambios mientras se programa. El service
+   worker solo se genera al compilar con 'npm run build' y se prueba con 'npm run preview'
+
 # Práctica 24 — El gimnasio instalable: PWA
 
 **Para el alumno.** Duración: 1 hora · Sesión 24 · Unidad V
